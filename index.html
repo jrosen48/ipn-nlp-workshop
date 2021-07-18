@@ -32,21 +32,27 @@ class: inverse, center, middle
 
 ### Over-arching goal:
 
-Get started with applying natural language processing methods in relatively short order through the use of R
+Get started with applying natural language processing methods in relatively short order through the use of R.
 
 ### Also: 
 
-This is an opportunity to get to know and learn from one another and to build capacity in science education research to use NLP and do ML
+This is an opportunity to get to know and learn from one another and to build capacity in science education research to use NLP and do ML.
 
 ---
 
 ## Agenda
 
-1. Introductions (20 min.
-2. Brief *R*efresher (20 min.) (10 min.)
+1. Introductions (20 min.)
+2. Brief *R*efresher (20 min.)
 3. Overview of core natural language processing (NLP) ideas (10 min.)
-4. Trying out NLP analyses, part A (30 min.)
-5. Trying out NLP analyses, part B (30 min.)
+
+10 min. break!
+
+4. Trying out NLP analyses, part A (25 min.)
+5. Trying out NLP analyses, part B (25 min.)
+
+10 min. break!
+
 6. Trying out NLP analyses, part C (30 min.)
 7. Learning and doing more (10 min.)
 8. Wrap-up (10 min.)
@@ -58,14 +64,13 @@ This is an opportunity to get to know and learn from one another and to build ca
 .pull-left[
 * Joshua (Josh) Rosenberg, Ph.D.
 * Assistant Professor, STEM Education, [University of Tennessee, Knoxville](https://utk.edu/)
-* Husband to Katie
-* Dad to a toddler
+* Husband to Katie, a school librarian, and Dad to a toddler, a cyclist in training
 * Research areas:
   * Science education
   * Data science education (a pedagogy)
   * Data science in education (a research approach)
-     * Especially Bayesian methods
-* Former science teacher in North Carolina
+     * Esp. Bayesian methods
+* Former science teacher
 * R user since 2014; developer of many R packages
 * Presently PI or Co-PI for three National Science Foundation grants
 ]
@@ -95,20 +100,170 @@ class: inverse, center, middle
 
 ---
 
+## Let's reason about some code
+
+
+
+
+```r
+library(tidyverse)
+
+sci_data &lt;- read_csv(here("data", "data-to-model.csv"))
+
+sci_data %&gt;% 
+  select(student_id, final_grade) %&gt;% 
+  arrange(desc(final_grade))
+```
+
+
+```r
+sci_data %&gt;% 
+  select(student_id, final_grade) %&gt;% 
+  arrange(desc(final_grade))
+```
+
+```
+## # A tibble: 546 x 2
+##    student_id final_grade
+##         &lt;dbl&gt;       &lt;dbl&gt;
+##  1      85650       100  
+##  2      91067        99.8
+##  3      66740        99.3
+##  4      86792        99.1
+##  5      78153        99.0
+##  6      66689        98.6
+##  7      88261        98.6
+##  8      92740        98.6
+##  9      92726        98.2
+## 10      92741        98.2
+## # … with 536 more rows
+```
+What is the _data_?
+What are the _functions_?
+What are the _arguments_ to the functions?
+
+And . . .
+
+What do you think will happen?
+
+---
+
+
+```r
+sci_data %&gt;% 
+  select(student_id, final_grade) %&gt;% 
+  arrange(desc(final_grade))
+```
+
+```
+## # A tibble: 546 x 2
+##    student_id final_grade
+##         &lt;dbl&gt;       &lt;dbl&gt;
+##  1      85650       100  
+##  2      91067        99.8
+##  3      66740        99.3
+##  4      86792        99.1
+##  5      78153        99.0
+##  6      66689        98.6
+##  7      88261        98.6
+##  8      92740        98.6
+##  9      92726        98.2
+## 10      92741        98.2
+## # … with 536 more rows
+```
+
+---
+
+
+```r
+sci_data %&gt;% 
+  group_by(subject) %&gt;% 
+  summarize(mean_final_grade = mean(final_grade, na.rm = TRUE))
+```
+
+What is the _data_?
+What are the _functions_?
+What are the _arguments_ to the functions?
+
+And . . .
+
+What do you think will happen?
+
+---
+
+
+```r
+sci_data %&gt;% 
+  group_by(subject) %&gt;% 
+  summarize(mean_final_grade = mean(final_grade, na.rm = TRUE))
+```
+
+```
+## # A tibble: 5 x 2
+##   subject mean_final_grade
+##   &lt;chr&gt;              &lt;dbl&gt;
+## 1 AnPhA               76.1
+## 2 BioA                68.4
+## 3 FrScA               80.6
+## 4 OcnA                73.3
+## 5 PhysA               83.5
+```
+
+---
+
+***Code Snippet A***
+
+
+```r
+sci_data %&gt;% 
+  mutate(passing_grade = if_else(final_grade &gt;= .70, 1, 0))
+```
+
+***Code Snippet B***
+
+
+```r
+sci_data %&gt;% 
+  mutate(passing_grade = if_else(final_grade &gt;= .70, 1, 0))
+```
+
+What is different about the two code snippets?
+
+---
+
+Getting Started task: https://rstudio.cloud/spaces/156192/project/2711839
+
+---
+
 class: inverse, center, middle
 
 # 3. Overview of core NLP ideas (10 min.)
 
 ---
 
-## 
-- Overview of five foundational NLP ideas (10 min.)
-    - Text is everywhere, but it is often much less-structured than the kind of data stored in tables we are used to working with
-    - Text can be treated as data
-    - Input: A corpus, text with meta-data, typically in a spreadsheet format
-    - Key structure: The document-term matrix
-    - The creation of a document-term matrix involves processing: tokenizing and optionally removing stopwords, weighting and stemming
+## Text is everywhere
+
+But it is often much less-structured than the kind of data stored in tables we are used to working with
+ 
+---
+
+## Text can be treated as data
+
+---
+
+## Input: A corpus, text with meta-data, typically in a spreadsheet format
     
+---
+
+## Key structure: The document-term matrix
+
+---
+
+## The creation of a document-term matrix involves processing: tokenizing and optionally removing stopwords, weighting and stemming
+
+
+*Let's also review a bit on what we mean by machine learning*
+
 ---
 
 ## Defining Machine Learning (ML)
