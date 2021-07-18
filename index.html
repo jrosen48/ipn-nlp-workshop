@@ -89,8 +89,8 @@ In randomly assigned break-out rooms of ~5-6 people, *starting with whomever has
 birthday farthest from today*:
 
 - **Introduce yourself** and your position and affiliation
-- **Describe the best thing that you have done this summer**
-- **Share two words** that capture your attitude toward/beliefs about natural language processing
+- **Describe the best thing** that you have done this summer
+- **What are some of your goals** for this workshop (or using natural language processing in science education!)?
 
 ---
 
@@ -138,6 +138,7 @@ sci_data %&gt;%
 ## 10      92741        98.2
 ## # … with 536 more rows
 ```
+
 What is the _data_?
 What are the _functions_?
 What are the _arguments_ to the functions?
@@ -247,20 +248,47 @@ But it is often much less-structured than the kind of data stored in tables we a
  
 ---
 
-## Text can be treated as data
+## Text as data
+
+Text can be treated as data
 
 ---
 
-## Input: A corpus, text with meta-data, typically in a spreadsheet format
+## Input
+
+A corpus, text with meta-data, typically in a spreadsheet format
     
 ---
 
-## Key structure: The document-term matrix
+## Key structure
+
+**Tokenized text**
+
+&gt; A token is a meaningful unit of text, most often a word, that we are interested in using for further analysis, and tokenization is the process of splitting text into tokens. ([Tidy Text Mining](https://www.tidytextmining.com/tidytext.html))
+
+
+| student_id|word    |
+|----------:|:-------|
+|     101404|so      |
+|     101404|the     |
+|     101404|model   |
+|     101404|could   |
+|     101404|explain |
 
 ---
 
-## The creation of a document-term matrix involves processing: tokenizing and optionally removing stopwords, weighting and stemming
+**Another key structure**
 
+The _document-term_ (or document-frequency, they're the same) matrix, which uses tokenized text
+
+&lt;img src="img/dtm.png" width="712" /&gt;
+
+---
+
+## The creation of a document-term matrix involves processing
+
+- tokenizing
+- optionally removing stopwords, weighting and stemming
 
 *Let's also review a bit on what we mean by machine learning*
 
@@ -394,20 +422,77 @@ class: inverse, center, middle
 
 ---
 
-- Term frequencies
-- Term co-occurrences (10 min.) 
-- Dictionary-based analyses (10 min.)
+## Structure
+
+.pull-left[
+What we'll be doing during these try it out:
+
+- Discussing a few examples
+- Running code within breakout rooms
+- Sharing what we found together
+]
+
+.pull-right[
+
+The _three_ segments will be organized around a recent, key paper: [Nelson et al. (2021)](https://www.jstor.org/stable/pdf/24572662.pdf?casa_token=_2BwFZHwOl0AAAAA:IQto4pK-kR-YEkU3zGahMgVI3dFQcG_TgV2TlyoTVkw4kG7xvkJPMIdLJF2T8m6bmsX9R_QFBQ53kcINy8jnIKf2keWi7PqzB5drP2Lj1JCubQLfNUoC):
+
+1. Dictionary-based approaches
+2. Topic modeling
+3. Supervised machine learning
+
+*These may be especially relevant to science education research*
+
+&lt;img src="img/nelson-2021.png" width="75%" /&gt;
+
+---
+
+## Example
+
+**Using Twitter users profile descriptions to predict whether or not they were teachers**
+
+- Manually coded &gt; 500 profiles for whether they were teachers or non-teachers
+- Trained a Support Vector Machine model (or algorithm) on _text features_ using 90% of the data
+- For the remaining 10% of the data, we predicted whether or not someone was a teacher with an accuracy of 85%; `\(\kappa\)` = 0.612.
+- Then used the trained classifier to predict whether or not 1000s of users were or were not teachers (and used these classifications in a multi-level model)
+
+*AERA Open*, https://journals.sagepub.com/doi/10.1177/23328584211024261
+
+---
+
+## What well do in part A
+
+.pull-left[
+
+We'll focus on two things, which build upon the other: 
+
+1. Term frequencies
+2. Dictionary-based analyses
+
+]
+
+.pull-right[
+
+We'll do this in R through the use of the [{tidytext}](https://www.tidytextmining.com/tidytext.html) R package
+
+Core ideas:
+
+- tokenizing the text
+- **counting up** words!
+- joining another set of data with words and pre-determined codes (a _dictionary_)
+- **counting up** the codes that are joined!
+
+]
+---
 
 ## In break-out rooms
 
 Using the file `try-it-out-part-a.R`, work to answer one or more of the following questions:
 
-- How well does our model perform when we _add_ the gradebook or discussion predictors?
-- What should we take away from this model and analysis, in general?
+- What do the most frequent words tell us?
+- What does the dictionary-based analysis tell us?
 
-Let's head over to the [Learning Lab in RStudior Cloud](https://rstudio.cloud/spaces/140247/project/2510028)!
+Let's head over to the [Learning Lab in RStudio Cloud](https://rstudio.cloud/spaces/156192/projects) (and find `try-it-out-part-a.R`)!
 
-Add to this slide: https://docs.google.com/presentation/d/1UA_jXyXSq2k5GnXBtlB-a1_Wo0xz1oLR46luo2YoblM/edit?usp=sharing
 ---
 
 class: inverse, center, middle
@@ -416,7 +501,27 @@ class: inverse, center, middle
 
 ---
 
-- Topic models (20 min.)
+## What well do in part A
+
+.pull-left[
+
+We'll focus on two things, each of which builds upon the last: 
+
+1. Topic models
+
+]
+
+.pull-right[
+
+We'll do this in R through the use of the [{tidytext}](https://www.tidytextmining.com/tidytext.html) R package
+
+Core ideas:
+
+- 
+
+]
+
+---
 
 ## In break-out rooms
 
@@ -425,9 +530,7 @@ Using the file `try-it-out-part-b.R`, work to answer one or more of the followin
 - How well does our model perform when we _add_ the gradebook or discussion predictors?
 - What should we take away from this model and analysis, in general?
 
-Let's head over to the [Learning Lab in RStudior Cloud](https://rstudio.cloud/spaces/140247/project/2510028)!
-
-Add to this slide: https://docs.google.com/presentation/d/1UA_jXyXSq2k5GnXBtlB-a1_Wo0xz1oLR46luo2YoblM/edit?usp=sharing
+Let's head over to the [Learning Lab in RStudio Cloud](https://rstudio.cloud/spaces/156192/projects) (and find `try-it-out-part-b.R`)!
 
 ---
 
@@ -437,25 +540,45 @@ class: inverse, center, middle
 
 ---
 
-- Supervised machine learning models (20 min.)
+## What well do in part C
+
+.pull-left[
+
+1. Supervised machine learning models
+
+]
+
+.pull-right[
+
+Core ideas:
+
+- Once we have coded data, we can use this data to _train_ a model that can help us to scale up our analysis
+
+]
+
+---
 
 ## In break-out rooms
 
-Using the file `try-it-out-part-b.R`, work to answer one or more of the following questions:
+Using the file `try-it-out-part-c.R`, work to answer one or more of the following questions:
 
-- How well does our model perform when we _add_ the gradebook or discussion predictors?
-- What should we take away from this model and analysis, in general?
+- 
 
-Let's head over to the [Learning Lab in RStudior Cloud](https://rstudio.cloud/spaces/140247/project/2510028)!
+Let's head over to the [Learning Lab in RStudio Cloud](https://rstudio.cloud/spaces/156192/projects) (and find `try-it-out-part-c.R`)!
 
-Add to this slide: https://docs.google.com/presentation/d/1UA_jXyXSq2k5GnXBtlB-a1_Wo0xz1oLR46luo2YoblM/edit?usp=sharing
+---
+
+## Discussion of the three try it outs
+
+- What worked well?
+- For what purpose?
 
 ---
 class: inverse, center, middle
 
 # 7. Learning and doing more
 
-
+---
 
 ## Learning more
 
@@ -484,17 +607,22 @@ class: inverse, center, middle
 
 ---
 
-class: center, middle
-
 ## Thank you and contact information
+
+.pull-left[
 Stay in touch!
+
+What questions do you have? What is next for you?
+]
+
+.pull-right[
 
 Joshua Rosenberg  
 jmrosenberg@utk.edu  
 http://joshuamrosenberg.com/  
-@jrosenberg6432  
+[@jrosenberg6432](https://twitter.com/jrosenberg6432)
+]
 
-Slides created via the R package [xaringan](https://github.com/yihui/xaringan)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
