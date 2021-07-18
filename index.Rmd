@@ -18,11 +18,11 @@ options(htmltools.dir.version = FALSE)
 
 class: inverse, center, middle
 
-# Front matter
+# 1. Introductions
 
 ---
 
-# Goals of this workshop
+## Goals of this workshop
 
 ### Over-arching goal:
 
@@ -34,7 +34,20 @@ This is an opportunity to get to know and learn from one another and to build ca
 
 ---
 
-# About me
+## Agenda
+
+1. Introductions (20 min.
+2. Brief *R*efresher (20 min.) (10 min.)
+3. Overview of core natural language processing (NLP) ideas (10 min.)
+4. Trying out NLP analyses, part A (30 min.)
+5. Trying out NLP analyses, part B (30 min.)
+6. Trying out NLP analyses, part C (30 min.)
+7. Learning and doing more (10 min.)
+8. Wrap-up (10 min.)
+
+---
+
+## About me
 
 .pull-left[
 * Joshua (Josh) Rosenberg, Ph.D.
@@ -61,42 +74,28 @@ knitr::include_graphics("img/joro-cycle.jpeg")
 
 ---
 
-# Agenda
+## Break-out rooms!
 
-1. Introductions (20 min.)
-1. Overview of core Natural Language Processing (NLP) ideas (20 min.)
-1. Carrying out different NLP analyses, including machine learning (ML)-enabled uses (2 hr.)
-1. Learning and doing more (10 min.)
-1. Wrap-up (10 min.)
-
----
-
-class: inverse, center, middle
-
-# 1. Introductions
-
----
-
-# Break-out rooms!
-
-In randomly assigned break-out rooms of ~5 people, *starting with whomever has a 
-birthday nearest to today*:
+In randomly assigned break-out rooms of ~5-6 people, *starting with whomever has a 
+birthday farthest from today*:
 
 - **Introduce yourself** and your position and affiliation
-- **Describe one thing that you're not good at that you like to do**
-- **Describe one thing that you're good at that you don't like to do**
-- **Share two words** that capture your attitude toward/beliefs about machine learning 
-
-Be prepared to share your two words with the whole group when we return from break-out rooms. 
+- **Describe the best thing that you have done this summer**
+- **Share two words** that capture your attitude toward/beliefs about natural language processing
 
 ---
 
 class: inverse, center, middle
 
-# 2. Overview of core NLP ideas
+# 2. Brief *R*efresher (20 min.)
 
+---
 
-# Defining Machine Learning (ML)
+# 3. Overview of core NLP ideas (10 min.)
+
+---
+
+## Defining Machine Learning (ML)
 
 - *Artificial Intelligence (AI)*
 .footnote[
@@ -109,7 +108,7 @@ This definition leaves a lot of space for a range of approaches to ML
 
 ---
 
-# An example from my work
+## An example from my work
 
 **Using Twitter users profile descriptions to predict whether or not they were teachers**
 
@@ -130,9 +129,9 @@ background-size: contain
 
 ---
 
-# A helpful frame: Supervised & unsupervised
+## A helpful frame: Supervised & unsupervised
 
-## Supervised ML
+### Supervised ML
 
 - Requires coded data or data with a known outcome
 - Uses coded/outcome data to train an algorithm
@@ -146,7 +145,7 @@ background-size: contain
 
 ---
 
-# What kind of coded data?
+## What kind of coded data?
 
 > Want to detect spam? Get samples of spam messages. Want to forecast stocks? Find the price history. Want to find out user preferences? Parse their activities on Facebook (no, Mark, stop collecting it, enough!) (from [ML for Everyone](https://vas3k.com/blog/machine_learning/))
 
@@ -164,7 +163,7 @@ What else?
 
 ---
 
-# How is this different from regression?
+## How is this different from regression?
 
 The _aim_ is different, the algorithms and methods of estimation are not (or, are differences in degree, rather than in kind).
 
@@ -176,7 +175,7 @@ In an ML approach, we can use the same linear regression model, but with a goal 
 
 ---
 
-# So, how is this really different?
+## So, how is this really different?
 
 This _predictive goal_ means that we can do things differently:
 
@@ -190,7 +189,7 @@ This _predictive goal_ means that we can do things differently:
 
 ---
 
-# Okay, _really_ complex
+## Okay, _really_ complex
 
 - Okay, _really_ complex:
   - Neural networks
@@ -203,9 +202,9 @@ This _predictive goal_ means that we can do things differently:
 
 ---
 
-# A helpful frame: Supervised & unsupervised
+## A helpful frame: Supervised & unsupervised
 
-## Unsupervised ML
+### Unsupervised ML
 
 - Does not require coded data; one way to think about unsupervised ML is that its purpose is to discover codes/labels
 - Is used to discover groups among observations/cases or to summarize across variables
@@ -219,7 +218,7 @@ This _predictive goal_ means that we can do things differently:
 
 ---
 
-# What technique should I choose?
+## What technique should I choose?
 
 Do you have coded data or data with a known outcome -- let's say about science students -- and, do you want to:
 
@@ -239,7 +238,7 @@ Do you not yet have codes/outcomes -- and do you want to?
 
 ---
 
-# But, how do I select a particular model?
+## But, how do I select a particular model?
 
 One general principle is to **start with the simplest useful model** and to _build toward
 more complex models as helpfuL_.
@@ -254,7 +253,7 @@ This isn't just for beginners or science education researchers; [most spam filte
 
 ---
 
-# What's stopping me from specifying a complex model?
+## What's stopping me from specifying a complex model?
 
 - Nothing too much, apart from computing power, time, and concerns of 
 - A "check" on your work is your predictions on _test_ set data
@@ -266,12 +265,11 @@ This isn't just for beginners or science education researchers; [most spam filte
 
 .footnote[
 [1] not always/often used, for reasons we'll discuss later
-
 ]
 
 ---
 
-- Overview of five foundational NLP ideas (20 min.)
+- Overview of five foundational NLP ideas (10 min.)
     - Text is everywhere, but it is often much less-structured than the kind of data stored in tables we are used to working with
     - Text can be treated as data
     - Input: A corpus, text with meta-data, typically in a spreadsheet format
@@ -282,11 +280,20 @@ This isn't just for beginners or science education researchers; [most spam filte
 
 class: inverse, center, middle
 
-# 3. Carrying out different NLP analyses
+# 4. Trying out NLP analyses, part A (30 min.)
 
 ---
 
 - Term frequencies (20 min.) (after which we will take a brief 10 min. break)
+
+---
+
+class: inverse, center, middle
+
+# 5. Trying out NLP analyses, part B (30 min.)
+
+---
+
 - Key words in context (10 min.)
 - Term co-occurences (10 min.) 
 - Topic models (20 min.) (after which we'll take a brief 10 min. break)
@@ -294,54 +301,37 @@ class: inverse, center, middle
 
 ---
 
-# In break-out rooms
+## In break-out rooms
 
 Using the file `regression-ml.R`, work to answer one or more of the following questions:
 
 - How well does our model perform when we _add_ the gradebook or discussion predictors?
-- How well does our model perform when we _add_ all of the available predictors?
-- How well does our model perform when we _remove_ the survey variables?
-- How well does our model perform when we use _more_ info. from the gradebook or discussion data (see `prep-data.R`)?
-- How well does our model perform when we use _less_ info. from the gradebook or discussion data (see `prep-data.R`)?
 - What should we take away from this model and analysis, in general?
 
-Let's head over to the [Learning Lab in RStudio Cloud](https://rstudio.cloud/spaces/140247/project/2510028)!
+Let's head over to the [Learning Lab in RStudior Cloud](https://rstudio.cloud/spaces/140247/project/2510028)!
 
 Add to this slide: https://docs.google.com/presentation/d/1UA_jXyXSq2k5GnXBtlB-a1_Wo0xz1oLR46luo2YoblM/edit?usp=sharing
+---
+
+class: inverse, center, middle
+
+# 6. Trying out NLP analyses, part C (30 min.)
 
 ---
 
 class: inverse, center, middle
 
-# 4. Learning and doing more
+# 7. Learning and doing more
 
 ---
 
 class: inverse, center, middle
 
-# 5. Wrap-up
+# 8. Wrap-up
 
 ---
 
-# Text analysis (NLP)
-
-```{r, echo = FALSE, out.width="70%"}
-knitr::include_graphics("img/dtm.png")
-```
-
-Generality classifier: https://link.springer.com/content/pdf/10.1007/s10956-020-09862-4.pdf
-
-Generality paper: https://link.springer.com/content/pdf/10.1007/s10956-020-09862-4.pdf; non-paywall: https://joshuamrosenberg.com/post-prints/rosenberg-krist-jost.pdf
-
----
-
-class: inverse, center, middle
-
-# Conclusion (Part 7 of 7)
-
----
-
-# Learning more
+## Learning more
 
 - [tidymodels](https://www.tidymodels.org/)
 - [Hands-on Machine Learning With R](https://bradleyboehmke.github.io/HOML/)
@@ -351,7 +341,7 @@ class: inverse, center, middle
 
 ---
 
-# Recommendations
+## Recommendations
 
 - Start with a problem you are facing
 - Use a simple algorithm that you can understand and troubleshoot
@@ -364,7 +354,7 @@ class: inverse, center, middle
 
 class: center, middle
 
-# Thank you and contact information
+## Thank you and contact information
 Stay in touch!
 
 Joshua Rosenberg  
