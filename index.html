@@ -95,8 +95,20 @@ class: inverse, center, middle
 
 ---
 
+class: inverse, center, middle
+
 # 3. Overview of core NLP ideas (10 min.)
 
+---
+
+## 
+- Overview of five foundational NLP ideas (10 min.)
+    - Text is everywhere, but it is often much less-structured than the kind of data stored in tables we are used to working with
+    - Text can be treated as data
+    - Input: A corpus, text with meta-data, typically in a spreadsheet format
+    - Key structure: The document-term matrix
+    - The creation of a document-term matrix involves processing: tokenizing and optionally removing stopwords, weighting and stemming
+    
 ---
 
 ## Defining Machine Learning (ML)
@@ -109,27 +121,6 @@ class: inverse, center, middle
 - *Machine learning (ML)*: A subset of AI focused on how computers acquire new information/knowledge
 
 This definition leaves a lot of space for a range of approaches to ML
-
----
-
-## An example from my work
-
-**Using Twitter users profile descriptions to predict whether or not they were teachers**
-
-- Manually coded &gt; 500 profiles for whether they were teachers or non-teachers
-- Trained a Support Vector Machine model (or algorithm) on _text features_ using 90% of the data
-- For the remaining 10% of the data, we predicted whether or not someone was a teacher with an accuracy of 85%; `\(\kappa\)` = 0.612.
-- Then used the trained classifier to predict whether or not 1000s of users were or were not teachers (and used these classifications in a multi-level model)
-
-Rosenberg et al., *AERA Open*, in press
-
-https://osf.io/xymsd/
-
----
-
-background-image: url("https://i.vas3k.ru/7vx.jpg")
-background-position: center
-background-size: contain
 
 ---
 
@@ -157,7 +148,7 @@ In science education:
 
 - Assessment data (e.g., [1](https://link.springer.com/article/10.1007/s10956-020-09895-9))
 - Data from log files ("trace data") (e.g., [1](https://www.tandfonline.com/doi/full/10.1080/10508406.2013.837391?casa_token=-8Fm2KCFJ30AAAAA%3Altbc8Y8ci_z-uLJx4se9tgvru9mzm3yqCTFi12ndJ5uM6RDl5YJGG6_4KpUgIK5BYa_Ildeh2qogoQ))
-- Open-ended written responses (e.g., [1](https://link.springer.com/article/10.1007/s10956-020-09889-7), [2](https://doi.org/10.1007/s11423-020-09761-w))
+- Open-ended written (text) responses (e.g., [1](https://link.springer.com/article/10.1007/s10956-020-09889-7), [2](https://doi.org/10.1007/s11423-020-09761-w))
 - Achievement data (i.e., end-of-course grades) (e.g., [1](https://link.springer.com/article/10.1007/s10956-020-09888-8), [2](https://search.proquest.com/docview/2343734516?pq-origsite=gscholar&amp;fromopenview=true))
 
 What else?
@@ -242,72 +233,19 @@ Do you not yet have codes/outcomes -- and do you want to?
 
 ---
 
-## But, how do I select a particular model?
-
-One general principle is to **start with the simplest useful model** and to _build toward
-more complex models as helpfuL_.
-
-This principle applies in multiple ways:
-
-- To choose an algorithm, start with simpler models that you can efficiently use and understand
-- To carry out feature engineering, understand your predictors well by starting with a subset
-- To tune an algorithm, start with a relatively simple set of tuning parameters
-
-This isn't just for beginners or science education researchers; [most spam filters use Support Vector Machines (and used Naive Bayes until recently)](https://vas3k.com/blog/machine_learning/) due to their combination of effectiveness and efficiency "in production."
-
----
-
-## What's stopping me from specifying a complex model?
-
-- Nothing too much, apart from computing power, time, and concerns of 
-- A "check" on your work is your predictions on _test_ set data
-  - *Train data*: Coded/outcome data that you use to train ("estimate") your model
-  - *Validation data&lt;sup&gt;1&lt;/sup&gt;*: Data you use to select a particular algorithm
-  - *Test ("hold-out") data*: Data that you do not use in any way to train your data
-
-- An important way to achieve good performance with test data is to balance between the inherent _bias_ in your algorithm and the _variance_ in the predictions of your algorithm; this is referred to as the **bias-variance** trade-off of _all_ models
-
-.footnote[
-[1] not always/often used, for reasons we'll discuss later
-]
-
----
-
-- Overview of five foundational NLP ideas (10 min.)
-    - Text is everywhere, but it is often much less-structured than the kind of data stored in tables we are used to working with
-    - Text can be treated as data
-    - Input: A corpus, text with meta-data, typically in a spreadsheet format
-    - Key structure: The document-term matrix
-    - The creation of a document-term matrix involves processing: tokenizing and optionally removing stopwords, weighting and stemming
-
----
-
 class: inverse, center, middle
 
 # 4. Trying out NLP analyses, part A (30 min.)
 
 ---
 
-- Term frequencies (20 min.) (after which we will take a brief 10 min. break)
-
----
-
-class: inverse, center, middle
-
-# 5. Trying out NLP analyses, part B (30 min.)
-
----
-
-- Key words in context (10 min.)
-- Term co-occurences (10 min.) 
-- Topic models (20 min.) (after which we'll take a brief 10 min. break)
-- Supervised machine learning models (20 min.)
-
----
+- Term frequencies
+- Term co-occurrences (10 min.) 
+- Dictionary-based analyses (10 min.)
 
 ## In break-out rooms
 
-Using the file `regression-ml.R`, work to answer one or more of the following questions:
+Using the file `try-it-out-part-a.R`, work to answer one or more of the following questions:
 
 - How well does our model perform when we _add_ the gradebook or discussion predictors?
 - What should we take away from this model and analysis, in general?
@@ -319,21 +257,50 @@ Add to this slide: https://docs.google.com/presentation/d/1UA_jXyXSq2k5GnXBtlB-a
 
 class: inverse, center, middle
 
+# 5. Trying out NLP analyses, part B (30 min.)
+
+---
+
+- Topic models (20 min.)
+
+## In break-out rooms
+
+Using the file `try-it-out-part-b.R`, work to answer one or more of the following questions:
+
+- How well does our model perform when we _add_ the gradebook or discussion predictors?
+- What should we take away from this model and analysis, in general?
+
+Let's head over to the [Learning Lab in RStudior Cloud](https://rstudio.cloud/spaces/140247/project/2510028)!
+
+Add to this slide: https://docs.google.com/presentation/d/1UA_jXyXSq2k5GnXBtlB-a1_Wo0xz1oLR46luo2YoblM/edit?usp=sharing
+
+---
+
+class: inverse, center, middle
+
 # 6. Trying out NLP analyses, part C (30 min.)
 
 ---
 
+- Supervised machine learning models (20 min.)
+
+## In break-out rooms
+
+Using the file `try-it-out-part-b.R`, work to answer one or more of the following questions:
+
+- How well does our model perform when we _add_ the gradebook or discussion predictors?
+- What should we take away from this model and analysis, in general?
+
+Let's head over to the [Learning Lab in RStudior Cloud](https://rstudio.cloud/spaces/140247/project/2510028)!
+
+Add to this slide: https://docs.google.com/presentation/d/1UA_jXyXSq2k5GnXBtlB-a1_Wo0xz1oLR46luo2YoblM/edit?usp=sharing
+
+---
 class: inverse, center, middle
 
 # 7. Learning and doing more
 
----
 
-class: inverse, center, middle
-
-# 8. Wrap-up
-
----
 
 ## Learning more
 
@@ -353,6 +320,12 @@ class: inverse, center, middle
 - Share and receive feedback
 - Explore the variety of ways you can use machine learning; we are deciding as a field how machine learning will (or will not) make a difference in our work
 - It _will be really hard at first_; you can do this!
+
+---
+
+class: inverse, center, middle
+
+# 8. Wrap-up
 
 ---
 
