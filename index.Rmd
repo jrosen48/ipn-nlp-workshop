@@ -83,8 +83,7 @@ This is an opportunity to get to know and learn from one another and to build ca
 * Research areas:
   * Science education
   * Data science in education
-* R user since 2014; developer of many R packages
-* Presently PI or Co-PI for three National Science Foundation grants
+* Presently PI or Co-PI for three National Science Foundation grants (and senior personnel for [LASER](https://www.fi.ncsu.edu/projects/laser-institute/))
 ]
 
 .pull-right[
@@ -99,12 +98,11 @@ knitr::include_graphics("img/joro-cycle.jpeg")
 
 ## Break-out rooms!
 
-In randomly assigned break-out rooms of ~5-6 people, *starting with whomever has a 
-birthday farthest from today*:
+In randomly assigned break-out rooms of ~5-6 people, *starting with whomever has the most plants*:
 
 - **Introduce yourself** and your position and affiliation
-- **Describe the best thing** that you have done this summer
-- **What are some of your goals** for using natural language processing in science education?
+- **Describe the most enjoyable or valuable thing** you have done this summer
+- **What are some of your goals** for using _natural language processing_ in science education?
 
 ---
 
@@ -130,11 +128,6 @@ sci_data %>%
   arrange(desc(final_grade))
 ```
 
-```{r}
-sci_data %>% 
-  select(student_id, final_grade) %>% 
-  arrange(desc(final_grade))
-```
 
 What is the _data_?
 What are the _functions_?
@@ -146,6 +139,8 @@ What do you think will happen?
 
 ---
 
+## Let's reason about some code
+
 ```{r, eval = TRUE}
 sci_data %>% 
   select(student_id, final_grade) %>% 
@@ -153,6 +148,8 @@ sci_data %>%
 ```
 
 ---
+
+## Let's reason about some code
 
 ```{r, eval = FALSE}
 sci_data %>% 
@@ -170,6 +167,8 @@ What do you think will happen?
 
 ---
 
+## Let's reason about some code
+
 ```{r, eval = TRUE}
 sci_data %>% 
   group_by(subject) %>% 
@@ -177,6 +176,8 @@ sci_data %>%
 ```
 
 ---
+
+## Let's reason about some code
 
 ***Code Snippet A***
 
@@ -188,7 +189,7 @@ sci_data %>%
 ***Code Snippet B***
 
 ```{r, eval = FALSE}
-sci_data %>% 
+sci_data <- sci_data %>% 
   mutate(passing_grade = if_else(final_grade >= .70, 1, 0))
 ```
 
@@ -196,7 +197,9 @@ What is different about the two code snippets?
 
 ---
 
-Getting Started task: https://rstudio.cloud/spaces/156192/project/2711839
+## Getting Started task
+
+If necessary for review/questions, a link is here: https://rstudio.cloud/spaces/156192/project/2711839
 
 ---
 
@@ -216,25 +219,48 @@ knitr::include_graphics("img/rosenberg-krist-prompt.png")
  
 ---
 
-## Text as data
+## Treating text as data
 
-Text can be treated as data, but this often involves:
+We often need to prepare text data in a number of ways:
 
-- Transcribing the text
-- Processing the text
+- Data entry (transcribing responses written with pencil and paper)
+- Removing punctuation
+- Removing very common words, _stopwords_
+- Weighting words (e.g., *tf-idf*)
+- Removing particular words or documents
+- Stemming words
 
 ---
 
-## Input
+## Key structures
 
-To consider text as data, it is common to structure data in a _corpus_:
+To consider text as data, it is necessary to structure the data in particular ways: 
   - A _corpus_: text with meta-data, often but not always in a table/spreadsheet format
+  - A collection of _tokens_, usually words (but any unit of text, like a sentence)
+  - a _document-frequency matrix
     
 ---
 
-## Key structure
+## Key structures
 
-**Tokenized text**
+**Corpus**
+
+```{r, echo= FALSE, message = FALSE, warning = FALSE}
+library(tidytext)
+d <- read_csv(here("data", "generality-data.csv"))
+d <- clean_names(d) # so the names are easier to type
+d <- mutate(d, unique_id = 1:nrow(d))
+d <- mutate(d, code = round(code)) # this is to ignore sub-codes
+
+my_corpus <- corpus(d)
+
+my_corpus
+```
+
+---
+## Key structures
+
+**Tokens**
 
 > A token is a meaningful unit of text, most often a word, that we are interested in using for further analysis, and tokenization is the process of splitting text into tokens. ([Tidy Text Mining](https://www.tidytextmining.com/tidytext.html))
 
@@ -248,10 +274,16 @@ d %>%
 
 ---
 
-## The creation of a document-term matrix involves processing
+## Document-frequency matrix
 
-- creating tokens
-- removing stopwords, weighting, and stemming
+Representing a collection of texts in a data frame / matrix format:
+
+- rows represent documents
+- columns represent the words across all documents
+
+```{r, echo = FALSE, warning=FALSE}
+dfm(my_corpus)
+```
 
 ---
 
@@ -266,9 +298,11 @@ d %>%
 
 This definition leaves a lot of space for a range of approaches to ML
 
+See the materials for the first workshop [here](https://joshuamrosenberg.com/post/2021/05/05/workshop-on-machine-learning-in-science-education-research/)
+
 ---
 
-## A helpful frame: Supervised & unsupervised
+## A helpful frame: Supervised & unsupervised ML
 
 ### Supervised ML
 
@@ -281,63 +315,6 @@ This definition leaves a lot of space for a range of approaches to ML
   - Logistic regression
   - Decision tree
   - Support Vector Machine
-
----
-
-## What kind of coded data?
-
-> Want to detect spam? Get samples of spam messages. Want to forecast stocks? Find the price history. Want to find out user preferences? Parse their activities on Facebook (no, Mark, stop collecting it, enough!) (from [ML for Everyone](https://vas3k.com/blog/machine_learning/))
-
-In science education:
-
-- Assessment data (e.g., [1](https://link.springer.com/article/10.1007/s10956-020-09895-9))
-- Data from log files ("trace data") (e.g., [1](https://www.tandfonline.com/doi/full/10.1080/10508406.2013.837391?casa_token=-8Fm2KCFJ30AAAAA%3Altbc8Y8ci_z-uLJx4se9tgvru9mzm3yqCTFi12ndJ5uM6RDl5YJGG6_4KpUgIK5BYa_Ildeh2qogoQ))
-- Open-ended written (text) responses (e.g., [1](https://link.springer.com/article/10.1007/s10956-020-09889-7), [2](https://doi.org/10.1007/s11423-020-09761-w))
-- Achievement data (i.e., end-of-course grades) (e.g., [1](https://link.springer.com/article/10.1007/s10956-020-09888-8), [2](https://search.proquest.com/docview/2343734516?pq-origsite=gscholar&fromopenview=true))
-
-What else?
-- Drawings/diagrammatic models
-- Data collected for formative purposes (i.e., exit tickets)
-- ???
-
----
-
-## How is this different from regression?
-
-The _aim_ is different, the algorithms and methods of estimation are not (or, are differences in degree, rather than in kind).
-
-In a linear regression, our aim is to estimate parameters, such as $\beta_0$ (intercept) and $\beta_1$ (slope), and to make inferences about them that are not biased by our particular sample.
-
-In an ML approach, we can use the same linear regression model, but with a goal other than making unbiased inferences about the $\beta$ parameters:
-
-<h4><center>In supervised ML, our goal is to minimize the difference between a known $y$ and our predictions, $\hat{y}$</center></h3>
-
----
-
-## So, how is this really different?
-
-This _predictive goal_ means that we can do things differently:
-
-- Multicollinearity is not an issue because we do not care to make inferences about parameters
-- Because interpreting specific parameters is less of an interest, we can use a great deal more predictors
-- We focus not on $R^2$ as a metric, but, instead, how accurately a _trained_ model can predict the values in _test_ data
-- We can make our models very complex (but may wish to "regularize" coefficients that are small so that their values are near-zero or are zero):
-  - Ridge models (can set parameters near to zero)
-  - Lasso models (can set parameters to zero)
-  - Elastic net models (can balance between ridge and lasso models)
-
----
-
-## Okay, _really_ complex
-
-- Okay, _really_ complex:
-  - Neural networks
-  - Deep networks
-- And, some models can take a different form than familiar regressions:
-  - *k*-nearest neighbors
-  - Decision trees (and their extensions of bagged and random forests)
-- Last, the modeling process can look different:
-  - Ensemble models that combine or improve on ("boosting") the predictions of individual models
 
 ---
 
@@ -359,19 +336,18 @@ This _predictive goal_ means that we can do things differently:
 
 ## What technique should I choose?
 
-Do you have coded data or data with a known outcome -- let's say about science students -- and, do you want to:
+Do you have coded data or data with a known outcome---let's say about science students---and, do you want to:
 
-- _Predict_ how other students with similar data (but without a known outcome) perform?
+- _Predict_ how other students with similar data perform?
 - _Scale_ coding that you have done for a sample of data to a larger sample?
-- _Provide timely or instantaneous feedback_, like in many learning analytics systems?
+- _Provide timely or instantaneous feedback_, e.g. learning analytics?
 
 <h4><center>Supervised methods may be your best bet</center></h4>
 
-Do you not yet have codes/outcomes -- and do you want to?
+Do you not yet have codes/outcomes---and do you want to?
 
-- _Achieve a starting point_ for qualitative coding, perhaps in a ["computational grounded theory"](https://journals.sagepub.com/doi/full/10.1177/0049124117729703) mode?
+- _Achieve a starting point_ for qualitative coding, perhaps as a part of a ["computational grounded theory"](https://journals.sagepub.com/doi/full/10.1177/0049124117729703) approach?
 - _Discover groups or patterns in your data_ that may be of interest?
-- _Reduce the number of variables in your dataset_ to a smaller, but perhaps nearly as explanatory/predictive - set of variables?
 
 <h4><center>Unsupervised methods may be helpful</center></h4>
 
@@ -391,28 +367,29 @@ class: inverse, center, middle
 
 ## Structure
 
-.pull-left[
-What we'll be doing during these try it out:
+### What we'll be doing during these try it out
 
 - Discussing a few examples
 - Running code within breakout rooms
 - Sharing what we found together
-]
 
-.pull-right[
+---
 
-The _three_ segments will be organized around a recent, key paper: [Nelson et al. (2021)](https://www.jstor.org/stable/pdf/24572662.pdf?casa_token=_2BwFZHwOl0AAAAA:IQto4pK-kR-YEkU3zGahMgVI3dFQcG_TgV2TlyoTVkw4kG7xvkJPMIdLJF2T8m6bmsX9R_QFBQ53kcINy8jnIKf2keWi7PqzB5drP2Lj1JCubQLfNUoC):
+## Structure
+
+### The contents of the segments
+
+The _three_ segments will be organized around a recent, key paper: [Nelson et al. (2021)](https://www.jstor.org/stable/pdf/24572662.pdf), detailing three approaches to qualitative coding/content analysis:
 
 1. Dictionary-based approaches
-2. Topic modeling
+2. Topic modeling (unsupervised machine learning)
 3. Supervised machine learning
 
-*These may be especially relevant to science education research*
+*I argue these three uses are especially relevant to science education research*
 
-```{r, echo = FALSE, out.width = "75%"}
+```{r, echo = FALSE, out.width = "50%"}
 knitr::include_graphics("img/nelson-2021.png")
 ```
-]
 
 ---
 
@@ -422,13 +399,22 @@ knitr::include_graphics("img/nelson-2021.png")
 
 Dictionary-based analyses
 
+Or, using a _pre-determined set of words_ to analyze text data
+
+We use the dictionary to search for the pre-determined words in our text
+
+Use cases:
+
+- When the presence of particular words is very important
+- For sentiment analysis
+
 ]
 
 .pull-right[
 
 We'll do this in R through the use of the [{tidytext}](https://www.tidytextmining.com/tidytext.html) R package
 
-Core ideas:
+Core ideas undergirding our approach:
 
 - tokenizing the text
 - **counting up** words!
@@ -438,20 +424,10 @@ Core ideas:
 ]
 ---
 
-## But first
+## But first, a brief example
 
 ```{r, echo = FALSE, out.width="80%"}
 knitr::include_graphics("img/rosenberg-krist.png")
-```
-
----
-
-## Coding frame
-
-```{r, eval = FALSE}
-coding_frame <- read_csv(here("data", "coding-frame.csv"))
-coding_frame %>% 
-  knitr::kable()
 ```
 
 ---
@@ -469,12 +445,22 @@ knitr::include_graphics("img/rosenberg-krist-prompt.png")
 *We will be using students' responses to these prompts in this workshop*
 
 ---
+
+## Coding frame
+
+```{r, eval = FALSE}
+coding_frame <- read_csv(here("data", "coding-frame.csv"))
+coding_frame %>% 
+  knitr::kable()
+```
+
+---
+
 ## In break-out rooms
 
-Using the file `try-it-out-part-a.R`, work to answer one or more of the following questions:
+Using the file `try-it-out-part-a.R`, work to answer the following question:
 
-- What do the most frequent words tell us?
-- What does the dictionary-based analysis tell us?
+### What additions can you make to the pre-determined dictionary to improve the analysis?
 
 Let's head over to the [Learning Lab in RStudio Cloud](https://rstudio.cloud/spaces/156192/projects) (and find `try-it-out-part-a.R`)!
 
@@ -492,6 +478,10 @@ class: inverse, center, middle
 
 We'll focus on topic modeling
 
+Topic modeling involves estimating the probability of a common **topic** being composed of particular words and the probability of a document being composed of particular topics
+
+The model is, at its core, probabilistic; there is uncertainty in both the make-up of the topics and documents
+
 ]
 
 .pull-right[
@@ -507,9 +497,20 @@ Core ideas include:
 
 ---
 
+## But first, a note
+
+We are switching from the {tidytext} to the {quanteda} package
+
+There are benefits to both
+
+- Especially if you are familiar with the {tidyverse}, {tidytext} will likely be familiar
+- {quanteda}, though, has additional functionality 
+
+---
+
 ## But first
 
-The creation of a _document-term matrix_ involves processing: tokenizing and optionally removing stopwords and stemming (reducing words to root forms)
+We'll focus on the use of a _document-term matrix_ 
 
 ```{r, out.width="80%", echo = FALSE}
 knitr::include_graphics("img/dtm.png")
@@ -518,10 +519,9 @@ knitr::include_graphics("img/dtm.png")
 ---
 ## In break-out rooms
 
-Using the file `try-it-out-part-b.R`, work to answer one or more of the following questions:
+Using the file `try-it-out-part-b.R`, work to answer the following question(s):
 
-- What is the best number of _k_?
-- What do the topics tell us about students' responses?
+### **What can the topic model results tell us? What can they not?**
 
 Let's head over to the [Learning Lab in RStudio Cloud](https://rstudio.cloud/spaces/156192/projects) (and find `try-it-out-part-b.R`)!
 
@@ -545,21 +545,33 @@ class: inverse, center, middle
 
 - Supervised machine learning
 
+- Or, using _already-coded responses_ to train a model (to learn the relationships between _x_ variables and a _y_ variable) to apply those codes to new data
+
+- Like for the ML models we discussed in the first workshop, there are many types of models; common models for text data include:
+
+   - Naive Bayes
+   - Support Vector Machine
+   - Ridge (regularized) regression
+   - Neural networks (deep learning)
+   
+- We can estimate all of these models through the use of the {quanteda} package
+
 ]
 
 .pull-right[
 
-We'll do this in R again through the use of the [{quanteda}](https://quanteda.io/) R package
+We'll do this in R again through the use of the [{quanteda}](https://quanteda.io/) R package as well as the [{quanteda.textmodels}](https://cran.r-project.org/web/packages/quanteda.textmodels/index.html) add-on package
 
 Core ideas include:
 
-- Once we have coded data, we can use this data to _train_ a model that can help us to scale up our analysis
+- We must split our data into train and test sets
+- Then, we fit a model and determine how well the model performed on the test data
 
 ]
 
 ---
 
-## But first
+## But first, an example
 
 Generality classifier: https://faast.shinyapps.io/generality-shiny/
 
@@ -569,20 +581,49 @@ knitr::include_graphics("img/generality-classifier.png")
 
 ---
 
+## One other example
+
+**Using Twitter users profile descriptions to predict whether or not they were teachers**
+
+- Manually coded > 500 profiles for whether they were teachers or non-teachers
+- Trained a Support Vector Machine model (or algorithm) on _text features_ using 90% of the data
+- For the remaining 10% of the data, we predicted whether or not someone was a teacher with an accuracy of 85%; $\kappa$ = 0.612.
+- Then used the trained classifier to predict whether or not 1000s of users were or were not teachers (and used these classifications in a multi-level model)
+
+Rosenberg et al., *AERA Open*, https://journals.sagepub.com/doi/10.1177/23328584211024261
+
+---
+
 ## In break-out rooms
 
-Using the file `try-it-out-part-c.R`, work to answer one or more of the following questions:
+Using the file `try-it-out-part-c.R`, work to answer the following question:
 
-- How well can a computer learn to apply already-existing codes/?
+### **What changes can we make to improve the performance?**
 
 Let's head over to the [Learning Lab in RStudio Cloud](https://rstudio.cloud/spaces/156192/projects) (and find `try-it-out-part-c.R`)!
+
+*One key note*: because we are making changes to our model based on how well it performs with the _test_ data, we would like to hold out a third sample of the data to test the performance of whichever model we select and end up using. We are not doing that for now.
+
+---
+
+## Returning to the Nelson (2021) paper
+
+Nelson focused on three approaches that may be especially relevant to science education: 
+
+1. Dictionary-based approaches
+2. Topic modeling (unsupervised machine learning)
+3. Supervised machine learning
+
+```{r, echo = FALSE, out.width = "75%"}
+knitr::include_graphics("img/nelson-2021.png")
+```
 
 ---
 
 ## Discussion of the three try it outs
 
 - What worked well?
-- For what purpose?
+- For what purpose(s)?
 
 ---
 class: inverse, center, middle
@@ -593,11 +634,18 @@ class: inverse, center, middle
 
 ## Learning more
 
-- [tidymodels](https://www.tidymodels.org/)
+NLP: 
+
+- [quanteda documentation](https://quanteda.io/)
+- [quanteda tutorials](https://tutorials.quanteda.io/machine-learning/topicmodel/)
+- [tidymodels text analysis example](https://tune.tidymodels.org/articles/extras/text_analysis.html)
+- [Julia Silge's blog](https://juliasilge.com/blog/)
+
+ML:
+
 - [Hands-on Machine Learning With R](https://bradleyboehmke.github.io/HOML/)
 - [Elements of Statistical Learning](https://web.stanford.edu/~hastie/ElemStatLearn/)
 - [Learning to Teach Machines to Learn](https://alison.rbind.io/post/2019-12-23-learning-to-teach-machines-to-learn/)
-- [Julia Silge's blog](https://juliasilge.com/blog/)
 
 ---
 
@@ -607,14 +655,34 @@ class: inverse, center, middle
 - Use a simple algorithm that you can understand and troubleshoot
 - Be mindful of your R code; small issues (with names!) can cause difficulties
 - Share and receive feedback
-- Explore the variety of ways you can use machine learning; we are deciding as a field how machine learning will (or will not) make a difference in our work
-- It _will be really hard at first_; you can do this!
+- Explore the variety of ways you can use text analysis and machine learning
+- Develop new approaches!
 
 ---
 
 class: inverse, center, middle
 
 # 8. Wrap-up
+
+---
+
+## Big idea
+
+In science education, we are still figuring out how to analyze text with computers
+
+There is room to draw upon what works in other fields (e.g., Nelson et al.'s [2021] findings)
+
+There is also room explore and develop new _science education-specific_ approaches
+
+---
+
+## Critical lenses
+
+- We should also have some degree of skepticism and pause
+
+- See Cheuk's recent paper in _Science Education_: https://onlinelibrary.wiley.com/doi/full/10.1002/sce.21671
+
+- What are other (downstream?) effects of using ML?
 
 ---
 
@@ -633,4 +701,3 @@ jmrosenberg@utk.edu
 http://joshuamrosenberg.com/  
 [@jrosenberg6432](https://twitter.com/jrosenberg6432)
 ]
-
