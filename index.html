@@ -64,13 +64,10 @@ This is an opportunity to get to know and learn from one another and to build ca
 .pull-left[
 * Joshua (Josh) Rosenberg, Ph.D.
 * Assistant Professor, STEM Education, [University of Tennessee, Knoxville](https://utk.edu/)
-* Husband to Katie, a school librarian, and Dad to a toddler, a cyclist in training
+* Husband to Katie, a school librarian, and Dad to a toddler, cyclist in training
 * Research areas:
   * Science education
-  * Data science education (a pedagogy)
-  * Data science in education (a research approach)
-     * Esp. Bayesian methods
-* Former science teacher
+  * Data science in education
 * R user since 2014; developer of many R packages
 * Presently PI or Co-PI for three National Science Foundation grants
 ]
@@ -90,7 +87,7 @@ birthday farthest from today*:
 
 - **Introduce yourself** and your position and affiliation
 - **Describe the best thing** that you have done this summer
-- **What are some of your goals** for this workshop (or using natural language processing in science education!)?
+- **What are some of your goals** for using natural language processing in science education?
 
 ---
 
@@ -244,19 +241,25 @@ class: inverse, center, middle
 
 ## Text is everywhere
 
-But it is often much less-structured than the kind of data stored in tables we are used to working with
+But it is often much _less-structured_ than the kind of data stored in tables we are used to working with
+
+&lt;img src="img/rosenberg-krist-prompt.png" width="75%" style="display: block; margin: auto;" /&gt;
  
 ---
 
 ## Text as data
 
-Text can be treated as data
+Text can be treated as data, but this often involves:
+
+- Transcribing the text
+- Processing the text
 
 ---
 
 ## Input
 
-A corpus, text with meta-data, typically in a spreadsheet format
+To consider text as data, it is common to structure data in a _corpus_:
+  - A _corpus_: text with meta-data, often but not always in a table/spreadsheet format
     
 ---
 
@@ -277,20 +280,10 @@ A corpus, text with meta-data, typically in a spreadsheet format
 
 ---
 
-**Another key structure**
-
-The _document-term_ (or document-frequency, they're the same) matrix, which uses tokenized text
-
-&lt;img src="img/dtm.png" width="712" /&gt;
-
----
-
 ## The creation of a document-term matrix involves processing
 
-- tokenizing
-- optionally removing stopwords, weighting and stemming
-
-*Let's also review a bit on what we mean by machine learning*
+- creating tokens
+- removing stopwords, weighting, and stemming
 
 ---
 
@@ -418,6 +411,12 @@ Do you not yet have codes/outcomes -- and do you want to?
 
 class: inverse, center, middle
 
+### 10 min. break!
+
+---
+
+class: inverse, center, middle
+
 # 4. Trying out NLP analyses, part A (30 min.)
 
 ---
@@ -443,30 +442,15 @@ The _three_ segments will be organized around a recent, key paper: [Nelson et al
 *These may be especially relevant to science education research*
 
 &lt;img src="img/nelson-2021.png" width="75%" /&gt;
+]
 
 ---
 
-## Example
-
-**Using Twitter users profile descriptions to predict whether or not they were teachers**
-
-- Manually coded &gt; 500 profiles for whether they were teachers or non-teachers
-- Trained a Support Vector Machine model (or algorithm) on _text features_ using 90% of the data
-- For the remaining 10% of the data, we predicted whether or not someone was a teacher with an accuracy of 85%; `\(\kappa\)` = 0.612.
-- Then used the trained classifier to predict whether or not 1000s of users were or were not teachers (and used these classifications in a multi-level model)
-
-*AERA Open*, https://journals.sagepub.com/doi/10.1177/23328584211024261
-
----
-
-## What well do in part A
+## What we'll do in part A
 
 .pull-left[
 
-We'll focus on two things, which build upon the other: 
-
-1. Term frequencies
-2. Dictionary-based analyses
+Dictionary-based analyses
 
 ]
 
@@ -484,6 +468,34 @@ Core ideas:
 ]
 ---
 
+## But first
+
+&lt;img src="img/rosenberg-krist.png" width="80%" /&gt;
+
+---
+
+## Coding frame
+
+
+```r
+coding_frame &lt;- read_csv(here("data", "coding-frame.csv"))
+coding_frame %&gt;% 
+  knitr::kable()
+```
+
+---
+
+## Outline
+
+Sought to use machine learning (ML) to develop a construct map for _students’ consideration of generality_, a key epistemic understanding that undergirds meaningful participation in _scientific practices_.
+
+**Example of an open-ended prompt for students**
+
+&lt;img src="img/rosenberg-krist-prompt.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+*We will be using students' responses to these prompts in this workshop*
+
+---
 ## In break-out rooms
 
 Using the file `try-it-out-part-a.R`, work to answer one or more of the following questions:
@@ -501,36 +513,48 @@ class: inverse, center, middle
 
 ---
 
-## What well do in part A
+## What well do in part B
 
 .pull-left[
 
-We'll focus on two things, each of which builds upon the last: 
-
-1. Topic models
+We'll focus on topic modeling
 
 ]
 
 .pull-right[
 
-We'll do this in R through the use of the [{tidytext}](https://www.tidytextmining.com/tidytext.html) R package
+We'll do this in R through the use of the [{quanteda}](https://quanteda.io/) and the [{topicmodels}](https://cran.r-project.org/web/packages/topicmodels/index.html) R packages
 
-Core ideas:
+Core ideas include:
 
-- 
+- Determining the value of _k_, the number of topics
+- Interpreting the topics (consider doing so in light of the coding frame on an earlier slide)
 
 ]
 
 ---
 
+## But first
+
+The creation of a _document-term matrix_ involves processing: tokenizing and optionally removing stopwords and stemming (reducing words to root forms)
+
+&lt;img src="img/dtm.png" width="80%" /&gt;
+
+---
 ## In break-out rooms
 
 Using the file `try-it-out-part-b.R`, work to answer one or more of the following questions:
 
-- How well does our model perform when we _add_ the gradebook or discussion predictors?
-- What should we take away from this model and analysis, in general?
+- What is the best number of _k_?
+- What do the topics tell us about students' responses?
 
 Let's head over to the [Learning Lab in RStudio Cloud](https://rstudio.cloud/spaces/156192/projects) (and find `try-it-out-part-b.R`)!
+
+---
+
+class: inverse, center, middle
+
+### 10 min. break!
 
 ---
 
@@ -544,13 +568,15 @@ class: inverse, center, middle
 
 .pull-left[
 
-1. Supervised machine learning models
+- Supervised machine learning
 
 ]
 
 .pull-right[
 
-Core ideas:
+We'll do this in R again through the use of the [{quanteda}](https://quanteda.io/) R package
+
+Core ideas include:
 
 - Once we have coded data, we can use this data to _train_ a model that can help us to scale up our analysis
 
@@ -558,11 +584,19 @@ Core ideas:
 
 ---
 
+## But first
+
+Generality classifier: https://faast.shinyapps.io/generality-shiny/
+
+&lt;img src="img/generality-classifier.png" width="80%" /&gt;
+
+---
+
 ## In break-out rooms
 
 Using the file `try-it-out-part-c.R`, work to answer one or more of the following questions:
 
-- 
+- How well can a computer learn to apply already-existing codes/?
 
 Let's head over to the [Learning Lab in RStudio Cloud](https://rstudio.cloud/spaces/156192/projects) (and find `try-it-out-part-c.R`)!
 
